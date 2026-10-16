@@ -4,127 +4,585 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEWS TIM 24 | हिंदी न्यूज़</title>
-  <meta name="description" content="NEWS TIM 24 पर पढ़ें ताजा हिंदी समाचार, मुंबई, महाराष्ट्र और देश की खबरें।">
+  <meta name="description" content="NEWS TIM 24 - मुंबई, महाराष्ट्र और देश की ताजा हिंदी खबरें।">
+  <meta name="theme-color" content="#101827">
+  <title>NEWS TIM 24 | ताजा हिंदी समाचार</title>
+
   <style>
+    :root {
+      --navy: #101827;
+      --red: #e52335;
+      --paper: #f3f5f9;
+      --text: #182235;
+      --muted: #647084;
+      --white: #ffffff;
+    }
+
     * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f5f8;
-      color: #172033;
+      font-family: Arial, "Noto Sans Devanagari", sans-serif;
+      background: var(--paper);
+      color: var(--text);
+      line-height: 1.65;
     }
-    header {
-      background: #101827;
-      color: white;
-      padding: 22px 16px;
-      border-bottom: 4px solid #e52335;
-    }
-    .brand {
-      max-width: 1000px;
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1120px, 100%);
       margin: auto;
-      font-size: 27px;
-      font-weight: bold;
+      padding: 0 18px;
     }
-    .brand span { color: #ff394b; }
+
+    .topbar {
+      background: #080e19;
+      color: #dce3ee;
+      font-size: 12px;
+      padding: 7px 0;
+    }
+
+    .topbar .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 22px 0;
+    }
+
+    .brand {
+      font-size: clamp(27px, 5vw, 39px);
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+
+    .brand span { color: #ff4051; }
+
     .tagline {
-      margin-top: 7px;
-      color: #cbd5e1;
-      font-size: 13px;
+      color: #c6cfdd;
+      font-size: 14px;
+      margin-top: 6px;
     }
-    nav {
-      background: #e52335;
-      padding: 12px 16px;
-      color: white;
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand-label {
+      border: 1px solid #526075;
+      padding: 7px 12px;
+      border-radius: 5px;
+      font-size: 12px;
       font-weight: bold;
-      text-align: center;
     }
-    main {
-      max-width: 1000px;
-      margin: 22px auto;
-      padding: 0 14px;
+
+    nav {
+      background: var(--red);
+      color: white;
+      overflow-x: auto;
     }
+
+    .navlinks {
+      display: flex;
+      gap: 0;
+      white-space: nowrap;
+    }
+
+    .navlinks a {
+      display: block;
+      padding: 12px 17px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .navlinks a:hover { background: #bd1728; }
+
     .breaking {
       background: white;
-      border-left: 5px solid #e52335;
-      padding: 15px;
-      margin-bottom: 22px;
+      margin: 20px 0;
+      display: flex;
+      align-items: stretch;
+      border-radius: 7px;
+      overflow: hidden;
+      box-shadow: 0 3px 14px #1018270b;
+    }
+
+    .breaking-label {
+      background: var(--red);
+      color: white;
+      font-weight: bold;
+      padding: 12px;
+      white-space: nowrap;
+    }
+
+    .breaking-text {
+      padding: 12px 14px;
+      font-size: 14px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 16px;
+      border-bottom: 2px solid #e1e5ed;
+    }
+
+    .section-head h1,
+    .section-head h2 {
+      margin: 0;
+      padding: 0 0 10px;
+      font-size: 23px;
+    }
+
+    .section-head h1::after,
+    .section-head h2::after {
+      content: "";
+      display: block;
+      height: 3px;
+      background: var(--red);
+      width: 60px;
+      position: relative;
+      top: 13px;
+    }
+
+    .section-head a {
+      color: var(--red);
+      font-weight: bold;
+      font-size: 13px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 18px;
+    }
+
+    .hero {
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px #1018270d;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 270px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-content { padding: 20px; }
+
+    .eyebrow {
+      color: var(--red);
+      font-weight: bold;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .hero h2 {
+      font-size: clamp(21px, 3vw, 29px);
+      line-height: 1.45;
+      margin: 9px 0;
+    }
+
+    .hero p, .card p {
+      color: var(--muted);
+      margin: 8px 0 15px;
+    }
+
+    .side-stories {
+      display: grid;
+      gap: 14px;
+    }
+
+    .side-story {
+      display: grid;
+      grid-template-columns: 115px 1fr;
+      gap: 13px;
+      align-items: center;
+      background: white;
+      border-radius: 9px;
+      padding: 10px;
+      box-shadow: 0 3px 14px #1018270b;
+    }
+
+    .side-story img {
+      width: 115px;
+      height: 105px;
+      object-fit: cover;
       border-radius: 6px;
     }
-    h1 { font-size: 23px; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 16px;
+
+    .side-story h3 {
+      font-size: 15px;
+      line-height: 1.5;
+      margin: 5px 0;
     }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
     .card {
       background: white;
       border-radius: 10px;
-      padding: 18px;
-      box-shadow: 0 2px 9px #00000010;
+      overflow: hidden;
+      box-shadow: 0 4px 16px #1018270b;
+      display: flex;
+      flex-direction: column;
     }
-    .category {
-      color: #e52335;
-      font-size: 13px;
+
+    .card > img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+      background: #e3e7ee;
+    }
+
+    .card-content {
+      padding: 17px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card h3 {
+      margin: 7px 0;
+      font-size: 19px;
+      line-height: 1.5;
+    }
+
+    .card p { font-size: 14px; }
+
+    .meta {
+      color: #778195;
+      font-size: 12px;
+      margin: 4px 0 10px;
+    }
+
+    .read-more {
+      color: var(--red);
+      font-size: 14px;
       font-weight: bold;
+      margin-top: auto;
+      padding-top: 6px;
+      display: inline-block;
     }
-    .card h2 { font-size: 19px; line-height: 1.5; }
-    .card p { color: #596579; line-height: 1.7; }
-    .note { font-size: 12px; color: #64748b; }
+
+    .read-more:hover { text-decoration: underline; }
+
+    .all-news { margin-bottom: 30px; }
+
+    .article {
+      background: white;
+      padding: 22px;
+      margin: 18px 0;
+      border-radius: 9px;
+      scroll-margin-top: 20px;
+    }
+
+    .article h2 { line-height: 1.5; }
+
+    .article p { color: #4c586c; }
+
+    .disclaimer {
+      font-size: 12px;
+      color: var(--muted);
+      background: #e8edf5;
+      border-radius: 7px;
+      padding: 13px;
+      margin: 25px 0;
+    }
+
     footer {
-      background: #101827;
+      background: var(--navy);
       color: white;
-      text-align: center;
-      padding: 24px 12px;
+      padding: 30px 0;
       margin-top: 35px;
-      line-height: 1.8;
     }
-    a { color: inherit; }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 25px;
+    }
+
+    footer p { color: #c6cfdd; font-size: 14px; }
+
+    footer a { color: #ffffff; }
+
+    .copyright {
+      border-top: 1px solid #394457;
+      margin-top: 20px;
+      padding-top: 16px;
+      font-size: 12px;
+      color: #c6cfdd;
+    }
+
+    @media (max-width: 760px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero img { height: 230px; }
+      .news-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .card > img { height: 155px; }
+      .card-content { padding: 13px; }
+      .card h3 { font-size: 16px; }
+      .side-stories { grid-template-columns: 1fr 1fr; }
+      .side-story { grid-template-columns: 1fr; }
+      .side-story img { width: 100%; height: 120px; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 430px) {
+      .news-grid { grid-template-columns: 1fr; }
+      .card > img { height: 210px; }
+      .side-stories { grid-template-columns: 1fr; }
+      .side-story { grid-template-columns: 100px 1fr; }
+      .side-story img { height: 95px; }
+      .breaking-label, .breaking-text { padding: 10px 8px; font-size: 12px; }
+    }
   </style>
 </head>
+
 <body>
+  <div class="topbar">
+    <div class="container">
+      <span>NEWS TIM 24 | हिंदी न्यूज़ पोर्टल</span>
+      <span>सत्यापित खबरें, जिम्मेदार पत्रकारिता</span>
+    </div>
+  </div>
+
   <header>
-    <div class="brand">NEWS <span>TIM 24</span></div>
-    <div class="tagline">आपकी खबर, आपकी आवाज़</div>
+    <div class="container brand-row">
+      <div>
+        <div class="brand">NEWS <span>TIM 24</span></div>
+        <div class="tagline">आपकी खबर, आपकी आवाज़</div>
+      </div>
+      <div class="brand-label">HINDI NEWS</div>
+    </div>
   </header>
 
-  <nav>होम　|　महाराष्ट्र　|　मुंबई　|　देश　|　दुनिया</nav>
+  <nav>
+    <div class="container navlinks">
+      <a href="#home">होम</a>
+      <a href="#mumbai">मुंबई</a>
+      <a href="#maharashtra">महाराष्ट्र</a>
+      <a href="#national">देश</a>
+      <a href="#world">दुनिया</a>
+      <a href="#about">हमारे बारे में</a>
+    </div>
+  </nav>
 
-  <main>
+  <main class="container" id="home">
     <div class="breaking">
-      <strong>NEWS TIM 24 में आपका स्वागत है</strong>
-      <p>सही और सत्यापित खबरों के लिए हमारी वेबसाइट देखते रहें।</p>
+      <div class="breaking-label">खास अपडेट</div>
+      <div class="breaking-text">
+        NEWS TIM 24 पर पढ़ें ताजा और सत्यापित समाचार।
+      </div>
     </div>
 
-    <h1>ताजा खबरें</h1>
-    <div class="grid">
-      <article class="card">
-        <div class="category">मुंबई</div>
-        <h2>मुंबई की ताजा खबरें</h2>
-        <p>यहाँ मुंबई की सत्यापित स्थानीय खबरों का विवरण प्रकाशित करें।</p>
-        <div class="note">अपडेट: खबर प्रकाशित करते समय तारीख जोड़ें।</div>
+    <div class="section-head">
+      <h1>आज की प्रमुख खबरें</h1>
+      <a href="#latest">सभी खबरें ↓</a>
+    </div>
+
+    <section class="hero-grid">
+      <article class="hero">
+        <img
+          src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1000&q=80"
+          alt="समाचार पत्र और पत्रकारिता"
+          fetchpriority="high">
+        <div class="hero-content">
+          <div class="eyebrow">NEWS TIM 24 SPECIAL</div>
+          <h2>खबरों की दुनिया में आपका स्वागत है</h2>
+          <p>मुंबई, महाराष्ट्र और देश-दुनिया की महत्वपूर्ण खबरों के लिए हमारा न्यूज़ पोर्टल देखें।</p>
+          <a class="read-more" href="#latest">ताजा खबरें देखें →</a>
+        </div>
       </article>
 
-      <article class="card">
-        <div class="category">महाराष्ट्र</div>
-        <h2>महाराष्ट्र की बड़ी खबरें</h2>
-        <p>यहाँ महाराष्ट्र की राजनीति, प्रशासन और जनहित से जुड़ी खबरें जोड़ें।</p>
-        <div class="note">अपडेट: खबर प्रकाशित करते समय तारीख जोड़ें।</div>
-      </article>
+      <div class="side-stories">
+        <article class="side-story">
+          <img src="https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=400&q=75" alt="मुंबई शहर">
+          <div>
+            <div class="eyebrow">मुंबई</div>
+            <h3>मुंबई की स्थानीय खबरों के लिए हमारा सेक्शन देखें</h3>
+            <a class="read-more" href="#mumbai">खबरें पढ़ें →</a>
+          </div>
+        </article>
 
-      <article class="card">
-        <div class="category">देश</div>
-        <h2>देश की प्रमुख खबरें</h2>
-        <p>यहाँ देश की सत्यापित और महत्वपूर्ण खबरों का विवरण जोड़ें।</p>
-        <div class="note">अपडेट: खबर प्रकाशित करते समय तारीख जोड़ें।</div>
-      </article>
+        <article class="side-story">
+          <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=400&q=75" alt="संसद भवन">
+          <div>
+            <div class="eyebrow">देश</div>
+            <h3>देश की प्रमुख खबरें और महत्वपूर्ण अपडेट</h3>
+            <a class="read-more" href="#national">खबरें पढ़ें →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="latest" class="all-news">
+      <div class="section-head">
+        <h2>ताजा खबरें</h2>
+        <span class="meta">NEWS TIM 24</span>
+      </div>
+
+      <div class="news-grid">
+        <article class="card" id="mumbai">
+          <img src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=800&q=80" alt="मुंबई शहर का दृश्य" loading="lazy">
+          <div class="card-content">
+            <div class="eyebrow">मुंबई</div>
+            <h3>मुंबई की ताजा खबरें</h3>
+            <div class="meta">स्थानीय समाचार</div>
+            <p>यहाँ मुंबई की सत्यापित खबर की मुख्य जानकारी लिखें।</p>
+            <a class="read-more" href="#article-mumbai">पूरी खबर पढ़ें →</a>
+          </div>
+        </article>
+
+        <article class="card" id="maharashtra">
+          <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=800&q=80" alt="भारत की ऐतिहासिक इमारत" loading="lazy">
+          <div class="card-content">
+            <div class="eyebrow">महाराष्ट्र</div>
+            <h3>महाराष्ट्र की प्रमुख खबरें</h3>
+            <div class="meta">राज्य समाचार</div>
+            <p>यहाँ महाराष्ट्र की राजनीति, प्रशासन या जनहित से जुड़ी सत्यापित खबर लिखें।</p>
+            <a class="read-more" href="#article-maharashtra">पूरी खबर पढ़ें →</a>
+          </div>
+        </article>
+
+        <article class="card" id="national">
+          <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=800&q=80" alt="राष्ट्रीय राजनीति" loading="lazy">
+          <div class="card-content">
+            <div class="eyebrow">देश</div>
+            <h3>देश की बड़ी खबरें</h3>
+            <div class="meta">राष्ट्रीय समाचार</div>
+            <p>यहाँ देश की महत्वपूर्ण और सत्यापित खबर का संक्षिप्त विवरण लिखें।</p>
+            <a class="read-more" href="#article-national">पूरी खबर पढ़ें →</a>
+          </div>
+        </article>
+
+        <article class="card" id="world">
+          <img src="https://images.unsplash.com/photo-1521295121783-8a321d551ad2?auto=format&fit=crop&w=800&q=80" alt="दुनिया का नक्शा" loading="lazy">
+          <div class="card-content">
+            <div class="eyebrow">दुनिया</div>
+            <h3>दुनिया की अहम खबरें</h3>
+            <div class="meta">अंतरराष्ट्रीय समाचार</div>
+            <p>यहाँ अंतरराष्ट्रीय घटनाओं की पुष्टि की गई जानकारी प्रकाशित करें।</p>
+            <a class="read-more" href="#article-world">पूरी खबर पढ़ें →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80" alt="व्यापार और कारोबार" loading="lazy">
+          <div class="card-content">
+            <div class="eyebrow">बिजनेस</div>
+            <h3>बिजनेस और अर्थव्यवस्था</h3>
+            <div class="meta">व्यापार समाचार</div>
+            <p>यहाँ बाजार, कारोबार और अर्थव्यवस्था से जुड़ी खबरों का विवरण दें।</p>
+            <a class="read-more" href="#article-business">पूरी खबर पढ़ें →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80" alt="खेल प्रतियोगिता" loading="lazy">
+          <div class="card-content">
+            <div class="eyebrow">खेल</div>
+            <h3>खेल जगत की खबरें</h3>
+            <div class="meta">खेल समाचार</div>
+            <p>यहाँ मैच के नतीजे और खेल से जुड़ी सत्यापित खबरें लिखें।</p>
+            <a class="read-more" href="#article-sports">पूरी खबर पढ़ें →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <h2>खबरों का विवरण</h2>
+    </div>
+
+    <article class="article" id="article-mumbai">
+      <div class="eyebrow">मुंबई</div>
+      <h2>मुंबई की ताजा खबरें</h2>
+      <p>यह डेमो लेख है। यहाँ वास्तविक खबर की पूरी जानकारी, स्थान, संबंधित तारीख और विश्वसनीय स्रोत जोड़ें।</p>
+      <p><strong>स्रोत:</strong> यहाँ आधिकारिक या विश्वसनीय स्रोत का नाम और लिंक जोड़ें।</p>
+    </article>
+
+    <article class="article" id="article-maharashtra">
+      <div class="eyebrow">महाराष्ट्र</div>
+      <h2>महाराष्ट्र की प्रमुख खबरें</h2>
+      <p>यह डेमो लेख है। प्रकाशित करने से पहले सत्यापित समाचार और पूरा विवरण यहाँ लिखें।</p>
+      <p><strong>स्रोत:</strong> यहाँ संबंधित स्रोत जोड़ें।</p>
+    </article>
+
+    <article class="article" id="article-national">
+      <div class="eyebrow">देश</div>
+      <h2>देश की बड़ी खबरें</h2>
+      <p>यह डेमो लेख है। वास्तविक राष्ट्रीय समाचार की पूरी जानकारी यहाँ जोड़ें।</p>
+      <p><strong>स्रोत:</strong> यहाँ संबंधित स्रोत जोड़ें।</p>
+    </article>
+
+    <article class="article" id="article-world">
+      <div class="eyebrow">दुनिया</div>
+      <h2>दुनिया की अहम खबरें</h2>
+      <p>यह डेमो लेख है। अंतरराष्ट्रीय खबर को प्रकाशित करने से पहले कई विश्वसनीय स्रोतों से पुष्टि करें।</p>
+      <p><strong>स्रोत:</strong> यहाँ संबंधित स्रोत जोड़ें।</p>
+    </article>
+
+    <article class="article" id="article-business">
+      <div class="eyebrow">बिजनेस</div>
+      <h2>बिजनेस और अर्थव्यवस्था</h2>
+      <p>यह डेमो लेख है। यहाँ कारोबार से जुड़ी सत्यापित खबर का पूरा विवरण जोड़ें।</p>
+      <p><strong>स्रोत:</strong> यहाँ संबंधित स्रोत जोड़ें।</p>
+    </article>
+
+    <article class="article" id="article-sports">
+      <div class="eyebrow">खेल</div>
+      <h2>खेल जगत की खबरें</h2>
+      <p>यह डेमो लेख है। यहाँ मैच, प्रतियोगिता या खिलाड़ी से जुड़ी पुष्टि की गई जानकारी जोड़ें।</p>
+      <p><strong>स्रोत:</strong> यहाँ संबंधित स्रोत जोड़ें।</p>
+    </article>
+
+    <div class="disclaimer">
+      सूचना: यह वेबसाइट का डेमो टेम्पलेट है। इसमें दिए गए नमूना लेख वास्तविक समाचार नहीं हैं। प्रकाशन से पहले तथ्य, तारीख, तस्वीरों के उपयोग के अधिकार और स्रोत जाँचें।
     </div>
   </main>
 
-  <footer>
-    <strong>NEWS TIM 24</strong><br>
-    आपकी खबर, आपकी आवाज़<br>
-    © NEWS TIM 24
+  <footer id="about">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand">NEWS <span>TIM 24</span></div>
+          <p>आपकी खबर, आपकी आवाज़। हमारा उद्देश्य जिम्मेदार और सत्यापित समाचार प्रस्तुत करना है।</p>
+        </div>
+        <div>
+          <strong>हमसे जुड़ें</strong>
+          <p><a href="#home">होम</a></p>
+          <p><a href="mailto:YOUR-EMAIL@example.com">ईमेल से संपर्क करें</a></p>
+          <p>यहाँ अपना आधिकारिक ईमेल डालें।</p>
+        </div>
+      </div>
+      <div class="copyright">
+        © NEWS TIM 24. सर्वाधिकार सुरक्षित।
+      </div>
+    </div>
   </footer>
 </body>
 </html>
