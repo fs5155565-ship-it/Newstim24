@@ -479,7 +479,89 @@
       NEWS TIM 24 पर पढ़ें ताजा खबरें और महत्वपूर्ण अपडेट।
     </div>
   </div>
+<!-- NEWS TIM 24: Firebase news section -->
+<section id="firebase-news" style="max-width:1100px;margin:20px auto;padding:16px;">
+  <h2 style="border-left:5px solid #c9001b;padding-left:12px;">
+    ताज़ा खबरें
+  </h2>
+  <p id="news-loading">खबरें लोड हो रही हैं...</p>
+  <div id="firebase-news-list"></div>
+</section>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+(function () {
+  const config = {
+    apiKey: "AIzaSyBY0ORgy4ggDGJ3ZZnaWRx-Ysbllq6CFHU",
+    authDomain: "news-tim-24.firebaseapp.com",
+    projectId: "news-tim-24",
+    storageBucket: "news-tim-24.firebasestorage.app",
+    messagingSenderId: "830103109352",
+    appId: "1:830103109352:web:5ce4a1c624116cbe13535d",
+    measurementId: "G-LB5YK3GMV0"
+  };
+
+  if (!firebase.apps.length) firebase.initializeApp(config);
+
+  const db = firebase.firestore();
+  const list = document.getElementById("firebase-news-list");
+  const loading = document.getElementById("news-loading");
+
+  db.collection("news").get().then(function (snapshot) {
+    loading.textContent = snapshot.empty
+      ? "अभी कोई खबर उपलब्ध नहीं है।"
+      : "";
+
+    const docs = snapshot.docs.sort(function (a, b) {
+      const ta = a.data().createdAt;
+      const tb = b.data().createdAt;
+      return (tb && tb.toMillis ? tb.toMillis() : 0)
+           - (ta && ta.toMillis ? ta.toMillis() : 0);
+    });
+
+    docs.forEach(function (doc) {
+      const news = doc.data();
+      const card = document.createElement("article");
+      card.style.cssText =
+        "background:#fff;border:1px solid #ddd;border-radius:10px;" +
+        "padding:16px;margin:12px 0;box-shadow:0 2px 6px #0001";
+
+      const heading = document.createElement("h3");
+      heading.textContent = news.title || "बिना शीर्षक की खबर";
+      heading.style.cssText = "margin:0 0 8px;color:#171717";
+
+      const category = document.createElement("p");
+      category.textContent = news.category || "समाचार";
+      category.style.cssText = "color:#c9001b;font-size:13px";
+
+      card.appendChild(category);
+      card.appendChild(heading);
+
+      if (news.imageUrl && /^https?:\/\//i.test(news.imageUrl)) {
+        const img = document.createElement("img");
+        img.src = news.imageUrl;
+        img.alt = news.title || "समाचार फोटो";
+        img.loading = "lazy";
+        img.style.cssText =
+          "width:100%;max-height:360px;object-fit:cover;border-radius:8px";
+        card.appendChild(img);
+      }
+
+      const description = document.createElement("p");
+      description.textContent = news.description || "";
+      description.style.cssText = "white-space:pre-wrap;line-height:1.7";
+      card.appendChild(description);
+
+      list.appendChild(card);
+    });
+  }).catch(function (error) {
+    loading.textContent = "खबरें लोड नहीं हुईं। Firebase Rules जाँचें।";
+    console.error("News loading error:", error);
+  });
+})();
+</script>
+<!-- End NEWS TIM 24 Firebase news section --
   <main class="container" id="home">
 
     <div class="search-box">
