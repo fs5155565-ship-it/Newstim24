@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEWS TIM 24 - Admin Panel</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f1f3f6;margin:0;color:#222}
+header{background:#171717;color:white;padding:18px;text-align:center;border-bottom:4px solid #c9001b}
+main{max-width:600px;margin:20px auto;padding:16px}
+.card{background:white;padding:20px;border-radius:12px;box-shadow:0 2px 10px #0001;margin-bottom:16px}
+h2{margin-top:0}
+input,textarea,select,button{box-sizing:border-box;width:100%;padding:12px;margin:7px 0;border:1px solid #ccc;border-radius:7px;font-size:16px}
+button{background:#c9001b;color:white;border:0;font-weight:bold}
+button:disabled{opacity:.5}
+.note{font-size:13px;color:#555;line-height:1.5}
+#status{white-space:pre-wrap;color:#a00018}
+</style>
+</head>
+<body>
+<header><h2>NEWS TIM 24</h2><div>News Admin Panel</div></header>
+<main>
+<section class="card" id="loginBox">
+<h2>Admin Login</h2>
+<input id="email" type="email" placeholder="Admin Email" autocomplete="username">
+<input id="password" type="password" placeholder="Password" autocomplete="current-password">
+<button id="loginBtn">Login करें</button>
+<p class="note">Firebase Authentication में बनाया गया अपना ईमेल और पासवर्ड इस्तेमाल करें।</p>
+</section>
+
+<section class="card" id="newsBox" hidden>
+<h2>नई खबर पोस्ट करें</h2>
+<input id="title" placeholder="खबर की हेडलाइन" maxlength="180">
+<select id="category">
+<option value="राष्ट्रीय">राष्ट्रीय</option>
+<option value="महाराष्ट्र">महाराष्ट्र</option>
+<option value="मुंबई">मुंबई</option>
+<option value="क्राइम">क्राइम</option>
+<option value="राजनीति">राजनीति</option>
+<option value="खेल">खेल</option>
+<option value="दुनिया">दुनिया</option>
+</select>
+<textarea id="description" rows="6" placeholder="खबर की पूरी जानकारी"></textarea>
+<input id="imageUrl" type="url" placeholder="फोटो का URL (वैकल्पिक)">
+<button id="publishBtn">खबर Publish करें</button>
+<button id="logoutBtn" type="button">Logout</button>
+</section>
+<p id="status" role="status"></p>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBY0ORgy4ggDGJ3ZZnaWRx-Ysbllq6CFHU",
+  authDomain: "news-tim-24.firebaseapp.com",
+  projectId: "news-tim-24",
+  storageBucket: "news-tim-24.firebasestorage.app",
+  messagingSenderId: "830103109352",
+  appId: "1:830103109352:web:5ce4a1c624116cbe13535d",
+  measurementId: "G-LB5YK3GMV0"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const $ = id => document.getElementById(id);
+const status = message => $("status").textContent = message;
+
+auth.onAuthStateChanged(user => {
+  $("loginBox").hidden = !!user;
+  $("newsBox").hidden = !user;
+  if(user) status("लॉगिन सफल। खबर लिख सकते हैं।");
+});
+
+$("loginBtn").onclick = async () => {
+  const email = $("email").value.trim();
+  const password = $("password").value;
+  if(!email || !password) return status("ईमेल और पासवर्ड भरें।");
+  $("loginBtn").disabled = true;
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+    status("लॉगिन सफल।");
+  } catch(e) {
+    status("लॉगिन नहीं हुआ: " + e.message);
+  } finally {
+    $("loginBtn").disabled = false;
+  }
+};
+
+$("publishBtn").onclick = async () => {
+  const user = auth.currentUser;
+  if(!user) return status("पहले लॉगिन करें।");
+  const title = $("title").value.trim();
+  const description = $("description").value.trim();
+  const category = $("category").value;
+  const imageUrl = $("imageUrl").value.trim();
+
+  if(!title || !description) {
+    return status("हेडलाइन और खबर की जानकारी भरें।");
+  }
+  if(imageUrl && !/^https?:\/\//i.test(imageUrl)) {
+    return status("फोटो का सही http या https URL डालें।");
+  }
+
+  $("publishBtn").disabled = true;
+  try {
+    await db.collection("news").add({
+      title, description, category, imageUrl,
+      authorUid: user.uid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    $("title").value = "";
+    $("description").value = "";
+    $("imageUrl").value = "";
+    status("खबर Firebase में सेव हो गई।");
+  } catch(e) {
+    status("खबर सेव नहीं हुई: " + e.message +
+      "\nFirebase Firestore Rules की जाँच जरूरी हो सकती है।");
+  } finally {
+    $("publishBtn").disabled = false;
+  }
+};
+
+$("logoutBtn").onclick = async () => {
+  await auth.signOut();
+  status("Logout हो गया।");
+};
+</script>
+</body>
+</html>
